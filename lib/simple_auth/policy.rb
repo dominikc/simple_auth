@@ -86,7 +86,7 @@ module SimpleAuth
         (0..2).each do |i|
           c1 = is_allowed(controller, i)
           c2 = is_allowed(action, i)
-          condition = @denied[i][:all] ? c1 || c2 : c1 && c2
+          condition = (@denied[i][:all] || !@allowed[i][:all]) ? c1 || c2 : c1 && c2
           allowed = condition if condition != :default
         end
 
