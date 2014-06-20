@@ -20,11 +20,11 @@ describe Policy do
         deny notice: "Access denied", only: [:index, :show]
       end
     end
-    
+
     expect(@policy.denied?).to eq(true)
     expect(@policy.notice).to eq("Access denied")
   end
-  
+
   it "allows requests" do
     @policy.instance_eval do
       pages_controller do
@@ -34,7 +34,7 @@ describe Policy do
 
     expect(@policy.denied?).to eq(false)
   end
-  
+
   it "allows requests within PagesController" do
     @policy.instance_eval do
       allow only: [:pages]
@@ -50,7 +50,7 @@ describe Policy do
         allow if call { @user == :admin }
       end
     end
-      
+
     @policy.context.user = :user
     expect(@policy.denied?).to eq(true)
   end
@@ -62,7 +62,7 @@ describe Policy do
         allow if call { @user == :admin }
       end
     end
-      
+
     @policy.context.user = :admin
     expect(@policy.allowed?).to eq(true)
   end
@@ -74,7 +74,7 @@ describe Policy do
         allow except: [:create, :destroy]
       end
     end
-    
+
     cases.each do |action, value|
       @policy.context = TestRequest.new("example", action)
       expect(@policy.allowed?).to eq(value)
@@ -88,7 +88,7 @@ describe Policy do
         deny except: [:create, :destroy]
       end
     end
-    
+
     cases = {index: true, create: false, show: true, destroy: false}
     cases.each do |action, value|
       @policy.context = TestRequest.new("example", action)
