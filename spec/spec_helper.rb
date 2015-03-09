@@ -1,8 +1,5 @@
 require "simple_auth"
 
-RSpec.configure do |config|
-end
-
 class TestRequest
   attr_accessor :controller, :action, :user
   def initialize(controller, action)
